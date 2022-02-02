@@ -72,10 +72,24 @@ class ValueController extends Controller
             if($alarm->operator == "<"){
                 if($request->$TypeName < $alarm->switch_value){
                     array_push($test, $request->$TypeName . ' is kleiner dan ' . $alarm->switch_value);
+
+                    //email send = true
+                    $alarm->is_email_send = 1;
+                    $alarm->save();
+                } else {
+                    //email send = false
+                    $alarm->is_email_send = 0;
+                    $alarm->save();
                 }
             } else {
                 if($request->$TypeName > $alarm->switch_value){
                     array_push($test, $request->$TypeName . ' is groter dan ' . $alarm->switch_value);
+
+                    $alarm->is_email_send = 1;
+                    $alarm->save();
+                } else {
+                    $alarm->is_email_send = 0;
+                    $alarm->save();
                 }
             }
         }

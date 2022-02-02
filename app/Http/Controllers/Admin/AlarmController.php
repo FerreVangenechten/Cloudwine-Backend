@@ -82,7 +82,7 @@ class AlarmController extends Controller
                 if($station->id == $request->weather_station_id){
                     $alarm = Alarm::create(array_merge(
                         $request->all(),[
-                            'is_email_send' => false
+                            'is_email_send' => 0
                     ]));
                     return response()->json($alarm, 201);
                 }
