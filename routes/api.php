@@ -61,7 +61,7 @@ Route::middleware(['auth'])->prefix('user')->namespace('App\Http\Controllers')->
     //GRAPHTYPE
     Route::get('types', 'User\GraphTypeController@index');
     //DOWNLOAD
-    Route::get('csv/{weather_station_id}', 'App\Http\Controllers\User\CsvController@get_csv');
+    Route::get('csv/{weather_station_id}', 'User\CsvController@get_csv');
 
 });
 
