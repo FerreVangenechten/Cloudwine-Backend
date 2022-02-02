@@ -17,20 +17,20 @@ class WeatherStationController extends Controller
 
         if($organisation){
             if($status == 1){
-                $weatherstations = WeatherStation::where('organisation_id', $organisation)->get();
+                $weatherstations = WeatherStation::where('organisation_id', $organisation)->with('organisation')->get();
             } else if($status == 2){
-                $weatherstations = WeatherStation::where('organisation_id', $organisation)->where('is_active',0)->get();
+                $weatherstations = WeatherStation::where('organisation_id', $organisation)->where('is_active',0)->with('organisation')->get();
             } else {
-                $weatherstations = WeatherStation::where('organisation_id', $organisation)->where('is_active',1)->get();
+                $weatherstations = WeatherStation::where('organisation_id', $organisation)->where('is_active',1)->with('organisation')->get();
             }
             return response()->json($weatherstations,200);
         } else if($status){
             if($status == 2){
-                $weatherstations = WeatherStation::where('is_active',0)->get();
+                $weatherstations = WeatherStation::where('is_active',0)->with('organisation')->get();
             } else if($status == 1){
-                $weatherstations = WeatherStation::all();
+                $weatherstations = WeatherStation::with('organisation')->get();
             } else {
-                $weatherstations = WeatherStation::where('is_active', 1)->get();
+                $weatherstations = WeatherStation::where('is_active', 1)->with('organisation')->get();
             }
             return response()->json($weatherstations,200);
         }
