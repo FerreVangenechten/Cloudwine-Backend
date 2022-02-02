@@ -15,6 +15,8 @@ class Alarm extends Model
         'operator',
         'is_relais',
         'is_notification',
+        'is_email_send',
+
     ];
 
     protected $hidden = [

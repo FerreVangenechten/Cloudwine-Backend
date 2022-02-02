@@ -21,6 +21,7 @@ class CreateAlarmsTable extends Migration
             $table->string('operator');
             $table->boolean('is_relais')->default(false);
             $table->boolean('is_notification')->default(false);
+            $table->boolean('is_email_send')->default(false);
             $table->timestamps();
 
             // Foreign key relation
