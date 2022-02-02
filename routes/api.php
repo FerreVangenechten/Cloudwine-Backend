@@ -33,6 +33,7 @@ Route::post('reset', 'App\Http\Controllers\User\PasswordController@reset');
 //VERWIJDEREN
 //Route::get('send-mail','App\Http\Controllers\MailController@mailsend');
 //Route::delete('user/{user}','App\Http\Controllers\Admin\UserController@delete');
+Route::post('upload', 'App\Http\Controllers\SuperAdmin\UploadController@upload');
 
 
 //LOGGED USER
