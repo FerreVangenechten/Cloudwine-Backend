@@ -28,6 +28,8 @@ class AlarmTableSeeder extends Seeder
                 'operator' => '<',
                 'is_relais' => true,
                 'is_notification' => false,
+                'is_email_send' => false,
+
             ]);
         }
 
@@ -39,6 +41,7 @@ class AlarmTableSeeder extends Seeder
                 'operator' => '>',
                 'is_relais' => true,
                 'is_notification' => true,
+                'is_email_send' => false,
             ]);
         }
 
@@ -50,6 +53,7 @@ class AlarmTableSeeder extends Seeder
                 'operator' => '<',
                 'is_relais' => false,
                 'is_notification' => false,
+                'is_email_send' => false,
             ]);
         }
 

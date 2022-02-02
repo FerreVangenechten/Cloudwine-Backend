@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Station;
 
 use App\Http\Controllers\Controller;
+use App\Models\Alarm;
 use App\Models\GraphType;
 use App\Models\Value;
 use App\Models\WeatherStation;
@@ -49,25 +50,40 @@ class ValueController extends Controller
     public function store(Request $request)
     {
         $graphTypes = GraphType::all();
-        $weatherStation = WeatherStation::where('gsm',$request->gsm)->get();
+        $weatherStation = WeatherStation::where('gsm',$request->gsm)->first();
 
-        foreach ($graphTypes as $type) {
-            $name = $type->name;
-            Value::create([
-                'weather_station_id' => $weatherStation[0]->id,
-                'graph_type_id' => $type->id,
-                'value' => $request->$name,
-                'timestamp' => $request->time,
-            ]);
-        }
+//        foreach ($graphTypes as $type) {
+//            $name = $type->name;
+//            Value::create([
+//                'weather_station_id' => $weatherStation->id,
+//                'graph_type_id' => $type->id,
+//                'value' => $request->$name,
+//                'timestamp' => $request->time,
+//            ]);
+//        }
 
-        return response()->json('data is created',201); //201 --> Object created. Usefull for the store actions
 
         //get all alarms from the weatherstation
+        $alarms = Alarm::where('weather_station_id', $weatherStation->id)->where('is_notification',1)->with('graphType')->get();
 
+        $test = [];
+        foreach ($alarms as $alarm){
+            $TypeName = $alarm->graphType->name;
+            if($alarm->operator == "<"){
+                if($request->$TypeName < $alarm->switch_value){
+                    array_push($test, $request->$TypeName . ' is kleiner dan ' . $alarm->switch_value);
+                }
+            } else {
+                if($request->$TypeName > $alarm->switch_value){
+                    array_push($test, $request->$TypeName . ' is groter dan ' . $alarm->switch_value);
+                }
+            }
+        }
 
-        //send emails to all users from the station's organisation
+        //send emails to all users from the station's organisation with notifications on
 
+        return response()->json([$test,$alarms],201); //201 --> Object created. Usefull for the store actions
+//        return response()->json('data is created',201); //201 --> Object created. Usefull for the store actions
 
     }
 }
