@@ -50,10 +50,12 @@ class WeatherStationController extends Controller
         return response()->json($weatherStation, 201); //201 --> Object created. Usefull for the store actions
     }
 
-    public function update(Request $request, WeatherStation $weatherStation)
+    public function update(Request $request,$weatherStation)
     {
-        $weatherStation->update($request->all());
-        return response()->json($weatherStation,200); //200 --> OK, The standard success code and default option
+        $station =  WeatherStation::find($weatherStation);
+
+        $station->update($request->all());
+        return response()->json($station,200); //200 --> OK, The standard success code and default option
     }
 
 }
