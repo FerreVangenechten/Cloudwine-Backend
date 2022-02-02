@@ -78,8 +78,6 @@ class OTAController extends Controller
     {
         if(Storage::exists($update->bin_file_path)){
             Storage::delete($update->bin_file_path);
-        }else{
-            return response()->json('File does not exists.');
         }
 
         $update->delete();
