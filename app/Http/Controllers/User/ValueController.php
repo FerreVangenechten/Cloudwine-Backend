@@ -39,6 +39,7 @@ class ValueController extends Controller
                     ->where('graph_type_id',$sensor)
                     ->whereBetween('timestamp',[$from,$to])
                     ->with('graphType')
+                    ->orderBy('timestamp')
                     ->get();
             }
             return response()->json($values,200);
@@ -51,6 +52,7 @@ class ValueController extends Controller
                             ->where('graph_type_id',$sensor)
                             ->whereBetween('timestamp',[$from,$to])
                             ->with('graphType')
+                            ->orderBy('timestamp')
                             ->get();
                     }
                     return response()->json($values,200);
