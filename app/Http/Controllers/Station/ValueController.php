@@ -54,16 +54,15 @@ class ValueController extends Controller
         $graphTypes = GraphType::all();
         $weatherStation = WeatherStation::where('gsm',$request->gsm)->first();
 
-//        foreach ($graphTypes as $type) {
-//            $name = $type->name;
-//            Value::create([
-//                'weather_station_id' => $weatherStation->id,
-//                'graph_type_id' => $type->id,
-//                'value' => $request->$name,
-//                'timestamp' => $request->time,
-//            ]);
-//        }
-
+        foreach ($graphTypes as $type) {
+            $name = $type->name;
+            Value::create([
+                'weather_station_id' => $weatherStation->id,
+                'graph_type_id' => $type->id,
+                'value' => $request->$name,
+                'timestamp' => $request->time,
+            ]);
+        }
 
         //get all alarms from the weatherstation
         $alarms = Alarm::where('weather_station_id', $weatherStation->id)->where('is_notification',1)->with('graphType')->get();
@@ -71,12 +70,12 @@ class ValueController extends Controller
         //get all users that can receive notification
         $mailableUsers = User::where('organisation_id',$weatherStation->organisation_id)->where('can_receive_notification',1)->get();
 
-        $test = [];
+//        $test = [];
         foreach ($alarms as $alarm){
             $typeName = $alarm->graphType->name;
             if($alarm->operator == "<"){
                 if($request->$typeName < $alarm->switch_value && $alarm->is_email_send == 0){
-                    array_push($test, $request->$typeName . ' is kleiner dan ' . $alarm->switch_value);
+//                    array_push($test, $request->$typeName . ' is kleiner dan ' . $alarm->switch_value);
 
                     //MAIL
                     $details = [
@@ -87,7 +86,7 @@ class ValueController extends Controller
                     ];
 
                     foreach ($mailableUsers as $user){
-                        array_push($test,$user->email);
+//                        array_push($test,$user->email);
                         \Mail::to($user->email)->send(new AlarmMail($details));
                     }
                     //ENDMAIL
@@ -102,7 +101,7 @@ class ValueController extends Controller
                 }
             } else {
                 if($request->$typeName > $alarm->switch_value && $alarm->is_email_send == 0){
-                    array_push($test, $request->$typeName . ' is groter dan ' . $alarm->switch_value);
+//                    array_push($test, $request->$typeName . ' is groter dan ' . $alarm->switch_value);
 
                     //MAIL
                     $details = [
@@ -113,7 +112,7 @@ class ValueController extends Controller
                     ];
 
                     foreach ($mailableUsers as $user){
-                        array_push($test,$user->email);
+//                        array_push($test,$user->email);
                         \Mail::to($user->email)->send(new AlarmMail($details));
                     }
                     //ENDMAIL
