@@ -29,12 +29,8 @@ Route::get('values/location/{weatherStation}', 'App\Http\Controllers\ValueContro
 
 Route::post('login', 'App\Http\Controllers\AuthController@login');
 Route::post('reset', 'App\Http\Controllers\User\PasswordController@reset');
-//Route::post('/register', 'App\Http\Controllers\AuthController@register');
 
 //VERWIJDEREN
-//Route::get('send-mail','App\Http\Controllers\MailController@mailsend');
-//Route::delete('user/{user}','App\Http\Controllers\Admin\UserController@delete');
-Route::post('upload', 'App\Http\Controllers\SuperAdmin\UploadController@upload');
 
 
 //LOGGED USER
@@ -64,6 +60,9 @@ Route::middleware(['auth'])->prefix('user')->namespace('App\Http\Controllers')->
     Route::put('stationusers/{weather_station_id}', 'WeatherStationUserController@update');
     //GRAPHTYPE
     Route::get('types', 'User\GraphTypeController@index');
+    //DOWNLOAD
+    Route::get('csv/{weather_station_id}', 'App\Http\Controllers\User\CsvController@get_csv');
+
 });
 
 //ADMIN
