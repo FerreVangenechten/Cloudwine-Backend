@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Alarm;
 use App\Models\WeatherStation;
 use App\Models\WeatherStationUpdate;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UpdateController extends Controller
@@ -50,5 +52,11 @@ class UpdateController extends Controller
             ], 401);
         }
 
+    }
+
+    public function download(Request $request)
+    {
+        $path = $request->path;
+        return Storage::download($path);
     }
 }

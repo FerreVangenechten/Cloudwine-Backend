@@ -108,13 +108,19 @@ class AlarmController extends Controller
         }
 
         if(auth()->user()->is_superadmin){
-            $alarm->update($request->all());
+            $alarm->update(array_merge(
+                $request->all(),[
+                'is_email_send' => 0
+            ]));
             return response()->json($alarm,200);
         }else {
             $userStations = WeatherStation::where('organisation_id',auth()->user()->organisation_id)->get('id');
             foreach ($userStations as $station){
                 if($station->id == $alarm->weather_station_id){
-                    $alarm->update($request->all());
+                    $alarm->update(array_merge(
+                        $request->all(),[
+                        'is_email_send' => 0
+                    ]));
                     return response()->json($alarm,200);
                 }
             }
