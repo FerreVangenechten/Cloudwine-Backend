@@ -80,7 +80,7 @@ class WeatherStationController extends Controller
         }
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jouw organisatie',
-        ], 401);
+        ], 403);
 
          //200 --> OK, The standard success code and default option
     }

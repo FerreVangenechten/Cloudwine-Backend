@@ -62,7 +62,7 @@ class ValueController extends Controller
 
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jouw organisatie',
-        ], 401);
+        ], 403);
 
     }
 
@@ -108,7 +108,7 @@ class ValueController extends Controller
 
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jouw organisatie',
-        ], 401);
+        ], 403);
     }
 
 
@@ -126,6 +126,6 @@ class ValueController extends Controller
         $values = Value::where('weather_station_id', $weather_station_id)->whereBetween('timestamp',[$from,$to])->with('graphType')->get();
 
 
-        return response()->json($to,401);
+        return response()->json($to,403);
     }
 }

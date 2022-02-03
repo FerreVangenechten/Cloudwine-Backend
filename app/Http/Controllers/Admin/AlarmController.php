@@ -26,7 +26,7 @@ class AlarmController extends Controller
         }
         return response()->json([
             'message' => 'Dit alarm is niet van jouw organisatie',
-        ], 401);
+        ], 403);
 
 
     }
@@ -51,7 +51,7 @@ class AlarmController extends Controller
         }
         return response()->json([
             'message' => 'Dit alarm is niet van jouw organisatie',
-        ], 401);
+        ], 403);
 
     }
 
@@ -90,7 +90,7 @@ class AlarmController extends Controller
         }
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jou organisatie',
-        ], 401);
+        ], 403);
     }
 
     public function update(Request $request, Alarm $alarm)
@@ -127,7 +127,7 @@ class AlarmController extends Controller
         }
         return response()->json([
             'message' => 'Dit alarm is niet van jouw organisatie',
-        ], 401);
+        ], 403);
     }
 
 
@@ -147,7 +147,7 @@ class AlarmController extends Controller
         }
         return response()->json([
             'message' => 'Dit alarm is niet van jouw organisatie',
-        ], 401);
+        ], 403);
 
     }
 

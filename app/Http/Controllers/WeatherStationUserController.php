@@ -31,7 +31,7 @@ class WeatherStationUserController extends Controller
         }
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jouw organisatie',
-        ], 401);
+        ], 403);
 
     }
 
@@ -69,6 +69,6 @@ class WeatherStationUserController extends Controller
         }
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jouw organisatie',
-        ], 401);
+        ], 403);
     }
 }
