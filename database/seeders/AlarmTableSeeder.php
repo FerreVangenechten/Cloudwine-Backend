@@ -23,8 +23,8 @@ class AlarmTableSeeder extends Seeder
         for ($i = 0; $i < 3; $i++) {
             Alarm::create([
                 'weather_station_id' => 1,
-                'graph_type_id' => $faker->numberBetween(1,12),
-                'switch_value' => $faker->randomFloat(2, -20, 30),
+                'graph_type_id' => 2+$i,
+                'switch_value' => $faker->randomFloat(2, 0, 30),
                 'operator' => '<',
                 'is_relais' => true,
                 'is_notification' => false,
@@ -36,8 +36,8 @@ class AlarmTableSeeder extends Seeder
         for ($i = 0; $i < 3; $i++) {
             Alarm::create([
                 'weather_station_id' => 2,
-                'graph_type_id' => $faker->numberBetween(1,12),
-                'switch_value' => $faker->randomFloat(2, -20, 30),
+                'graph_type_id' => 5+$i,
+                'switch_value' => $faker->randomFloat(2, 5, 30),
                 'operator' => '>',
                 'is_relais' => true,
                 'is_notification' => true,
@@ -48,8 +48,8 @@ class AlarmTableSeeder extends Seeder
         for ($i = 0; $i < 3; $i++) {
             Alarm::create([
                 'weather_station_id' => 3,
-                'graph_type_id' => $faker->numberBetween(1,12),
-                'switch_value' => $faker->randomFloat(2, -20, 30),
+                'graph_type_id' => 3+$i,
+                'switch_value' => $faker->randomFloat(2, 10, 30),
                 'operator' => '<',
                 'is_relais' => false,
                 'is_notification' => false,

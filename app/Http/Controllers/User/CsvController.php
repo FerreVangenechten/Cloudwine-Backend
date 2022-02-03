@@ -75,20 +75,23 @@ class CsvController extends Controller
         //close the file
         fclose($handle);
 
+//        return response()->json($timestampValues);
+        return \Response::download($filename, "download.csv", $headers);
 
-        if(auth()->user()->is_superadmin){
-            return \Response::download($filename, "download.csv", $headers);
-        }else {
-            $userStations = WeatherStation::where('organisation_id',auth()->user()->organisation_id)->get('id');
-            foreach ($userStations as $station){
-                if($station->id ==$weather_station_id){
-                    return \Response::download($filename, "download.csv", $headers);
-                }
-            }
-        }
-        return response()->json([
-            'message' => 'Dit weerstation zit niet bij jouw organisatie',
-        ], 401);
+
+//        if(auth()->user()->is_superadmin){
+//            return \Response::download($filename, "download.csv", $headers);
+//        }else {
+//            $userStations = WeatherStation::where('organisation_id',auth()->user()->organisation_id)->get('id');
+//            foreach ($userStations as $station){
+//                if($station->id ==$weather_station_id){
+//                    return \Response::download($filename, "download.csv", $headers);
+//                }
+//            }
+//        }
+//        return response()->json([
+//            'message' => 'Dit weerstation zit niet bij jouw organisatie',
+//        ], 401);
 
         //download command
     }

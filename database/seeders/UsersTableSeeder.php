@@ -58,6 +58,65 @@ class UsersTableSeeder extends Seeder
         //standaard user
         User::create([
             'organisation_id' => 1,
+            'first_name' => 'Ferre',
+            'surname' => 'Vangenechten',
+            'email' => 'ferrevangenechten@hotmail.com',
+            'gsm' => '0470586561',
+            'password' => $password,
+            'is_active' => true,
+            'is_admin' => false,
+            'is_superadmin' => false,
+            'can_message' => true,
+            'can_receive_notification' => false,
+        ]);
+
+        //standaard user
+        User::create([
+            'organisation_id' => 1,
+            'first_name' => 'Luuk',
+            'surname' => 'Hoog',
+            'email' => 'r0658495@student.thomasmore.be',
+            'gsm' => '0485336655',
+            'password' => $password,
+            'is_active' => true,
+            'is_admin' => false,
+            'is_superadmin' => false,
+            'can_message' => true,
+            'can_receive_notification' => false,
+        ]);
+
+        User::create([
+            'organisation_id' => 1,
+            'first_name' => 'Klaas',
+            'surname' => 'Eelen',
+            'email' => 'r0740529@student.thomasmore.be',
+            'gsm' => '0470586461',
+            'password' => $password,
+            'is_active' => true,
+            'is_admin' => false,
+            'is_superadmin' => false,
+            'can_message' => true,
+            'can_receive_notification' => false,
+        ]);
+
+        User::create([
+            'organisation_id' => 1,
+            'first_name' => 'Jens',
+            'surname' => 'Fillée',
+            'email' => 'r0800028@student.thomasmore.be',
+            'gsm' => '0471558899',
+            'password' => $password,
+            'is_active' => true,
+            'is_admin' => false,
+            'is_superadmin' => false,
+            'can_message' => true,
+            'can_receive_notification' => false,
+        ]);
+
+
+        //standaard user
+        User::create([
+            'organisation_id' => 1,
             'first_name' => 'user',
             'surname' => 'resu',
             'email' => 'user@user.com',

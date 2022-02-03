@@ -31,6 +31,7 @@ Route::post('login', 'App\Http\Controllers\AuthController@login');
 Route::post('reset', 'App\Http\Controllers\User\PasswordController@reset');
 
 //VERWIJDEREN
+Route::get('csv/{weather_station_id}', 'App\Http\Controllers\User\CsvController@get_csv');
 
 
 //LOGGED USER
