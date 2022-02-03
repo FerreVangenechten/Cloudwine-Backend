@@ -47,11 +47,5 @@ class WeatherStationUpdateTableSeeder extends Seeder
             'weather_station_id' => 2,
             'is_installed' => false,
         ]);
-
-        WeatherStationUpdate::create([
-            'ota_update_id' => 3,
-            'weather_station_id' => 2,
-            'is_installed' => false,
-        ]);
     }
 }
