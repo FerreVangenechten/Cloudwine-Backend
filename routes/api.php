@@ -31,7 +31,10 @@ Route::post('login', 'App\Http\Controllers\AuthController@login');
 Route::post('reset', 'App\Http\Controllers\User\PasswordController@reset');
 
 //VERWIJDEREN
-Route::get('csv/{weather_station_id}', 'App\Http\Controllers\User\CsvController@get_csv');
+Route::get('test', 'App\Http\Controllers\Station\ValueController@test');
+Route::resource('test/weatherstations', 'App\Http\Controllers\SuperAdmin\WeatherStationController');
+Route::get('alarms/station/{weather_station_id}', 'App\Http\Controllers\Admin\AlarmController@index');
+Route::get('values/test/{weather_station_id}', 'App\Http\Controllers\User\ValueController@index');
 
 
 //LOGGED USER
@@ -51,7 +54,6 @@ Route::middleware(['auth'])->prefix('user')->namespace('App\Http\Controllers')->
     Route::get('values/relais/{weather_station_id}', 'User\ValueController@relais');
     Route::get('values/battery/{weather_station_id}', 'User\ValueController@battery');
     Route::get('values/location/{weather_station_id}', 'User\ValueController@location');
-    Route::get('values/test/{weather_station_id}', 'User\ValueController@timeframe');
 
     //WEATHERSTATION
     Route::get('weatherstations/{weatherStation}', 'Admin\WeatherStationController@show');
