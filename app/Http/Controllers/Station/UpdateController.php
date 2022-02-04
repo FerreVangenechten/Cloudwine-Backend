@@ -35,7 +35,6 @@ class UpdateController extends Controller
             return response()->json($validator->errors()->toJson(), 400);
         }
         if ($weatherstation && $validator->validated()){
-//        if ($weatherstation){
             $stationUpdates = WeatherStationUpdate::where('weather_station_id',$weatherstation->id)->get('id');
             foreach ($stationUpdates as $stationUpdate){
                 if($stationUpdate->id == $station_update->id){

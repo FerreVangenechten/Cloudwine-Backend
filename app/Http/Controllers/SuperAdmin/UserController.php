@@ -17,7 +17,6 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $organisation = $request->get('organisation');
-        $order = $request->get('order');
         $status = $request->get('active');
 
         if($organisation){
@@ -29,16 +28,7 @@ class UserController extends Controller
                 $users = User::where('organisation_id', $organisation)->where('is_active',1)->with('organisation')->get();
             }
             return response()->json($users,200);
-        }else if($order){
-            if($status == 2){
-                $users = User::orderBy('first_name', $order)->where('is_active',0)->with('organisation')->get();
-            } else if($status == 1){
-                $users = User::orderBy('first_name', $order)->with('organisation')->get();
-            } else {
-                $users = User::orderBy('first_name', $order)->where('is_active',1)->with('organisation')->get();
-            }
-            return response()->json($users,200);
-        } else if($status){
+        }else if($status){
             if($status == 2){
                 $users = User::orderBy('organisation_id','asc')->where('is_active',0)->with('organisation')->get();
             } else if($status == 1){
@@ -47,9 +37,7 @@ class UserController extends Controller
                 $users = User::orderBy('organisation_id','asc')->where('is_active',1)->with('organisation')->get();            }
             return response()->json($users,200);
         }
-//        $users = User::orderBy('organisation_id','asc')->where('is_active',1)->get();
         $users = User::where('is_active',1)->with('organisation')->get();
-
         return response()->json($users,200);
     }
 

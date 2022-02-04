@@ -35,10 +35,4 @@ class OrganisationController extends Controller
         $organisation->update($validator->validated());
         return response()->json($organisation,200); //200 --> OK, The standard success code and default option
     }
-
-//    public function delete(Organization $organization)
-//    {
-//        $organization->delete();
-//        return response()->json(null, 204); //204 --> No content. When action was executed succesfully, but there is no content to return
-//    }
 }

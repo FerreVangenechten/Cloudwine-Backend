@@ -18,6 +18,5 @@ class AlarmController extends Controller
         }])->get();
 
         return response()->json($alarms->makeHidden(['id','weather_station_id','graph_type_id','is_relais','is_notification','graphType.id']),200);
-
     }
 }

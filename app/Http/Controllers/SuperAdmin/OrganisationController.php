@@ -21,13 +21,9 @@ class OrganisationController extends Controller
             $organisation = Organisation::where('is_active', 1)->get();
         }
         return response()->json($organisation,200);
-
     }
 
-    public function show(Organisation $organisation)
-    {
-        return $organisation;
-    }
+    public function show(Organisation $organisation){return $organisation;}
 
     public function store(Request $request)
     {

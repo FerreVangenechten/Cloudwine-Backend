@@ -73,7 +73,6 @@ class UserController extends Controller
         ];
 
         \Mail::to($request->email)->send(new ActivationMail($details));
-
         //ENDMAIL
 
         //create stationusers when user is added
@@ -87,7 +86,6 @@ class UserController extends Controller
                 'timeframe_lux' => null
             ]);
         }
-
         return response()->json($user, 201);
     }
 
@@ -129,12 +127,5 @@ class UserController extends Controller
                 'message' => 'Deze gebruiker zit niet bij jouw organisatie',
             ], 403);
         }
-    }
-
-    // VERWIJDER DIT
-    public function delete(User $user)
-    {
-        $user->delete();
-        return response()->json(null, 204); //204 --> No content. When action was executed succesfully, but there is no content to return
     }
 }
