@@ -165,8 +165,6 @@ class ValueController extends Controller
         }
         //EINDE LOCATIE ALARM
 
-
-        return response()->json([$alarms],201); //201 --> Object created. Usefull for the store actions
 //        return response()->json('data is created',201); //201 --> Object created. Usefull for the store actions
 
     }
