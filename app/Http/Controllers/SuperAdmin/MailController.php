@@ -9,15 +9,9 @@ use Illuminate\Support\Facades\Validator;
 
 class MailController extends Controller
 {
-    public function index()
-    {
-        return Mail::all();
-    }
+    public function index(){return Mail::all();}
 
-    public function show(Mail $mail)
-    {
-        return $mail;
-    }
+    public function show(Mail $mail){return $mail;}
 
     public function store(Request $request)
     {

@@ -27,8 +27,6 @@ class AlarmController extends Controller
         return response()->json([
             'message' => 'Dit alarm is niet van jouw organisatie',
         ], 403);
-
-
     }
 
     public function show(Alarm $alarm)

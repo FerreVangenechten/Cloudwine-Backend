@@ -27,7 +27,6 @@ class ValueController extends Controller
 
     public function stateupdate(Request $request,$weather_station_gsm)
     {
-        // Validate $request
         $validator = Validator::make($request->all(), [
             'switch_state' => 'required|boolean',
             'is_manual_relais' => 'required|boolean'
@@ -38,7 +37,6 @@ class ValueController extends Controller
         }
         $weatherstation = WeatherStation::where('gsm',$weather_station_gsm)->first();
 
-        //update the user
         if($validator->validated()){
             $weatherstation->update($request->all());
         }
@@ -164,8 +162,7 @@ class ValueController extends Controller
         //ENDMAIL
         }
         //EINDE LOCATIE ALARM
-
-//        return response()->json('data is created',201); //201 --> Object created. Usefull for the store actions
+        return response()->json('data is created',201); //201 --> Object created. Usefull for the store actions
 
     }
 }

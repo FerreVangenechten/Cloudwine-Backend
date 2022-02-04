@@ -21,7 +21,6 @@ class OrganisationController extends Controller
             'country' => 'required',
         ]);
 
-
         if($validator->fails()){
             return response()->json($validator->errors()->toJson(), 400);
         }

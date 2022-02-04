@@ -77,17 +77,17 @@ class WeatherStationController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string',
-            'organisation_id' => 'integer',
-            'relais_name' => 'string',
+            'organisation_id' => 'integer|nullable',
+            'relais_name' => 'string|nullable',
             'is_active' => 'boolean',
             'is_public' => 'boolean',
             'is_manual_relais' => 'boolean',
             'switch_state' => 'boolean',
-            'longitude' => 'string',
-            'latitude' => 'string',
+            'longitude' => 'string|nullable',
+            'latitude' => 'string|nullable',
             'is_location_alarm' => 'boolean',
             'is_no_data_alarm' => 'boolean',
-            'gsm' => 'string|required|unique:users,gsm|regex:/(04)[0-9]{8}/' . $weatherStation
+            'gsm' => 'string|required|unique:users,gsm|regex:/(04)[0-9]{8}/'
         ]);
 
         if($validator->fails()){

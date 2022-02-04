@@ -8,35 +8,37 @@ use Illuminate\Support\Facades\Route;
 | API Routes
 |--------------------------------------------------------------------------
 */
-
 //WEATHER STATION
-Route::post('values', 'App\Http\Controllers\Station\ValueController@store');
-Route::get('alarms/gsm/{weather_station_gsm}', 'App\Http\Controllers\Station\AlarmController@gsm');
-Route::get('switchstate/{weather_station_gsm}','App\Http\Controllers\Station\ValueController@state');
-Route::put('switchstate/{weather_station_gsm}','App\Http\Controllers\Station\ValueController@stateupdate');
-Route::get('update/{weather_station_gsm}','App\Http\Controllers\Station\UpdateController@latestUpdate');
-Route::put('update/{station_update}/{weather_station_gsm}','App\Http\Controllers\Station\UpdateController@update');
-Route::get('gsm/{weather_station_gsm}','App\Http\Controllers\Station\PhoneController@index');
-Route::get('download','App\Http\Controllers\Station\UpdateController@download');
+Route::group(['namespace' => 'App\Http\Controllers\Station'], function() {
+    //WEATHER STATION
+    Route::post('values', 'ValueController@store');
+    Route::get('alarms/gsm/{weather_station_gsm}', 'AlarmController@gsm');
+    Route::get('switchstate/{weather_station_gsm}','ValueController@state');
+    Route::put('switchstate/{weather_station_gsm}','ValueController@stateupdate');
+    Route::get('update/{weather_station_gsm}','UpdateController@latestUpdate');
+    Route::put('update/{station_update}/{weather_station_gsm}','UpdateController@update');
+    Route::get('gsm/{weather_station_gsm}','PhoneController@index');
+    Route::get('download','UpdateController@download');
+});
 
 //VISITOR
-Route::get('weatherstations', 'App\Http\Controllers\WeatherStationController@public');
-Route::get('weatherstations/{weatherStation}', 'App\Http\Controllers\WeatherStationController@publicid');
-Route::get('values/{weatherStation}', 'App\Http\Controllers\ValueController@index');
-Route::get('values/relais/{weatherStation}', 'App\Http\Controllers\ValueController@relais');
-Route::get('values/battery/{weatherStation}', 'App\Http\Controllers\ValueController@battery');
-Route::get('values/location/{weatherStation}', 'App\Http\Controllers\ValueController@location');
+Route::group(['namespace' => 'App\Http\Controllers'], function() {
+    Route::get('weatherstations', 'WeatherStationController@public');
+    Route::get('weatherstations/{weatherStation}', 'WeatherStationController@publicid');
+    Route::get('values/{weatherStation}', 'Controllers\ValueController@index');
+    Route::get('values/relais/{weatherStation}', 'ValueController@relais');
+    Route::get('values/battery/{weatherStation}', 'ValueController@battery');
+    Route::get('values/location/{weatherStation}', 'ValueController@location');
 
-Route::post('login', 'App\Http\Controllers\AuthController@login');
-Route::post('reset', 'App\Http\Controllers\User\PasswordController@reset');
+    Route::post('login', 'AuthController@login');
+    Route::post('reset', 'User\PasswordController@reset');
+});
 
 //LOGGED USER
 Route::middleware(['auth'])->prefix('user')->namespace('App\Http\Controllers')->group(function () {
-//    Route::redirect('/', '/user/profile');
     Route::post('password', 'User\PasswordController@update');
     Route::get('profile', 'User\ProfileController@edit');
     Route::put('profile', 'User\ProfileController@update');
-
     //LOGIN
     Route::post('/logout','AuthController@logout');
     Route::post('/refresh', 'AuthController@refresh'); //refresh token
@@ -47,7 +49,6 @@ Route::middleware(['auth'])->prefix('user')->namespace('App\Http\Controllers')->
     Route::get('values/relais/{weather_station_id}', 'User\ValueController@relais');
     Route::get('values/battery/{weather_station_id}', 'User\ValueController@battery');
     Route::get('values/location/{weather_station_id}', 'User\ValueController@location');
-
     //WEATHERSTATION
     Route::get('weatherstations/{weatherStation}', 'Admin\WeatherStationController@show');
     Route::get('weatherstations', 'Admin\WeatherStationController@index');
@@ -58,7 +59,6 @@ Route::middleware(['auth'])->prefix('user')->namespace('App\Http\Controllers')->
     Route::get('types', 'User\GraphTypeController@index');
     //DOWNLOAD
     Route::get('csv/{weather_station_id}', 'User\CsvController@get_csv');
-
 });
 
 //ADMIN

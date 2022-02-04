@@ -46,11 +46,6 @@ class CsvController extends Controller
             'Pragma' => 'public',
         );
 
-        //I am storing the csv file in public >> files folder. So that why I am creating files folder
-//        if (!\Illuminate\Support\Facades\File::exists(public_path()."/downloads")) {
-//            \Illuminate\Support\Facades\File::makeDirectory(public_path() . "/downloads");
-//        }
-
         //creating the download file
         $filename =  public_path("downloads/download.csv");
         $handle = fopen($filename, 'w');
@@ -61,7 +56,6 @@ class CsvController extends Controller
             array_push($names,$type->name);
         }
         array_push($names,'timestamp');
-
 
         //adding the first row with the HEADERNAMES (T1,T2,T3)
         fputcsv($handle, $names);
@@ -80,10 +74,6 @@ class CsvController extends Controller
         //close the file
         fclose($handle);
 
-//        return response()->json($timestampValues);
-//        return \Response::download($filename, "download.csv", $headers);
-
-
         if(auth()->user()->is_superadmin){
             return \Response::download($filename, "download.csv", $headers);
         }else {
@@ -97,8 +87,6 @@ class CsvController extends Controller
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jouw organisatie',
         ], 403);
-
-        //download command
     }
 
 }
