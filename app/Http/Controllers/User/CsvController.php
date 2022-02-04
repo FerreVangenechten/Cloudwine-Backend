@@ -17,6 +17,11 @@ class CsvController extends Controller
         $from = date($request->get('start'));
         $to = date($request->get('stop'));
 
+        if($to){
+            $date = Carbon::parse($to);
+            $to = $date->addDay(1)->toDateString();
+        }
+
         if(!$from){
             $from = Carbon::now()->subDays(365)->toDateString();
         }
@@ -76,22 +81,22 @@ class CsvController extends Controller
         fclose($handle);
 
 //        return response()->json($timestampValues);
-        return \Response::download($filename, "download.csv", $headers);
+//        return \Response::download($filename, "download.csv", $headers);
 
 
-//        if(auth()->user()->is_superadmin){
-//            return \Response::download($filename, "download.csv", $headers);
-//        }else {
-//            $userStations = WeatherStation::where('organisation_id',auth()->user()->organisation_id)->get('id');
-//            foreach ($userStations as $station){
-//                if($station->id ==$weather_station_id){
-//                    return \Response::download($filename, "download.csv", $headers);
-//                }
-//            }
-//        }
-//        return response()->json([
-//            'message' => 'Dit weerstation zit niet bij jouw organisatie',
-//        ], 401);
+        if(auth()->user()->is_superadmin){
+            return \Response::download($filename, "download.csv", $headers);
+        }else {
+            $userStations = WeatherStation::where('organisation_id',auth()->user()->organisation_id)->get('id');
+            foreach ($userStations as $station){
+                if($station->id ==$weather_station_id){
+                    return \Response::download($filename, "download.csv", $headers);
+                }
+            }
+        }
+        return response()->json([
+            'message' => 'Dit weerstation zit niet bij jouw organisatie',
+        ], 403);
 
         //download command
     }

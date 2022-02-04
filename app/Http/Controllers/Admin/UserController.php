@@ -114,7 +114,7 @@ class UserController extends Controller
         }else {
             return response()->json([
                 'message' => 'Deze gebruiker zit niet bij jouw organisatie',
-            ], 401);
+            ], 403);
         }
     }
 
@@ -127,7 +127,7 @@ class UserController extends Controller
         }else {
             return response()->json([
                 'message' => 'Deze gebruiker zit niet bij jouw organisatie',
-            ], 401);
+            ], 403);
         }
     }
 

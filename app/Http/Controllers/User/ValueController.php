@@ -20,6 +20,11 @@ class ValueController extends Controller
         $from = date($request->get('start'));
         $to = date($request->get('stop'));
 
+        if($to){
+            $date = Carbon::parse($to);
+            $to = $date->addDay(1)->toDateString();
+        }
+
         if(!$from){
             $from = Carbon::now()->subDays(2)->toDateString();
         }
@@ -62,7 +67,7 @@ class ValueController extends Controller
 
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jouw organisatie',
-        ], 401);
+        ], 403);
 
     }
 
@@ -108,24 +113,6 @@ class ValueController extends Controller
 
         return response()->json([
             'message' => 'Dit weerstation zit niet bij jouw organisatie',
-        ], 401);
-    }
-
-
-    public function timeframe(Request $request,$weather_station_id)
-    {
-        $from = date($request->get('start'));
-//        $to = date($request->get('stop'));
-        $to = date($request->get('stop'));
-
-        if(!$to){
-            //add one day for the 'inbetween' function
-            $to = Carbon::now()->addDays(1)->toDateString();
-        }
-
-        $values = Value::where('weather_station_id', $weather_station_id)->whereBetween('timestamp',[$from,$to])->with('graphType')->get();
-
-
-        return response()->json($to,401);
+        ], 403);
     }
 }

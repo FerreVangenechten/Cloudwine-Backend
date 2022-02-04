@@ -54,6 +54,7 @@ class ValueController extends Controller
         $graphTypes = GraphType::all();
         $weatherStation = WeatherStation::where('gsm',$request->gsm)->first();
 
+        //ADD DATA IN DATABASE
         foreach ($graphTypes as $type) {
             $name = $type->name;
             Value::create([
@@ -71,12 +72,12 @@ class ValueController extends Controller
         $mailableUsers = User::where('organisation_id',$weatherStation->organisation_id)->where('can_receive_notification',1)->get();
 
 //        $test = [];
+        //STANDAARD ALARMEN
         foreach ($alarms as $alarm){
             $typeName = $alarm->graphType->name;
             if($alarm->operator == "<"){
                 if($request->$typeName < $alarm->switch_value && $alarm->is_email_send == 0){
 //                    array_push($test, $request->$typeName . ' is kleiner dan ' . $alarm->switch_value);
-
                     //MAIL
                     $details = [
                         'title' => 'Alarm weerstation: ',
@@ -125,9 +126,46 @@ class ValueController extends Controller
                 }
             }
         }
+        //EINDE GEWONE ALARMEN
 
-//        return response()->json([$test,$alarms],201); //201 --> Object created. Usefull for the store actions
-        return response()->json('data is created',201); //201 --> Object created. Usefull for the store actions
+        //LOCATIE ALARM
+        $latitudeTo = $request->GLA;
+        $longitudeTo = $request->GLO;
+        $earthRadius = 6371000;
+
+        $latitudeFrom = (double)$weatherStation->latitude;
+        $longitudeFrom = (double)$weatherStation->longitude;
+
+        // convert from degrees to radians
+        $latFrom = deg2rad($latitudeFrom);
+        $lonFrom = deg2rad($longitudeFrom);
+        $latTo = deg2rad($latitudeTo);
+        $lonTo = deg2rad($longitudeTo);
+
+        $lonDelta = $lonTo - $lonFrom;
+        $a = pow(cos($latTo) * sin($lonDelta), 2) +
+            pow(cos($latFrom) * sin($latTo) - sin($latFrom) * cos($latTo) * cos($lonDelta), 2);
+        $b = sin($latFrom) * sin($latTo) + cos($latFrom) * cos($latTo) * cos($lonDelta);
+
+        $angle = atan2(sqrt($a), $b);
+        $distance = ($angle * $earthRadius) / 1000.000;
+        if($distance > 2){
+            //MAIL
+            $details = [
+                'title' => 'Uw weerstation verplaatst! Weerstation: ' ,
+                'name' => $weatherStation->name,
+                'alarm' => 'Exacte locatie: lengtegraad = '. round($longitudeTo,2) . ' breedtegraad = '. round($latitudeTo,2),
+                'body' => 'LET OP: Uw weerstation is momenteel '. round($distance,2).' km verwijdert van zijn originele locatie'
+            ];
+
+            foreach ($mailableUsers as $user){
+                \Mail::to($user->email)->send(new AlarmMail($details));
+            }
+        //ENDMAIL
+        }
+        //EINDE LOCATIE ALARM
+
+//        return response()->json('data is created',201); //201 --> Object created. Usefull for the store actions
 
     }
 }
