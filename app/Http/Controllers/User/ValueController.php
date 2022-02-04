@@ -20,6 +20,11 @@ class ValueController extends Controller
         $from = date($request->get('start'));
         $to = date($request->get('stop'));
 
+        if($to){
+            $date = Carbon::parse($to);
+            $to = $date->addDay(1)->toDateString();
+        }
+
         if(!$from){
             $from = Carbon::now()->subDays(2)->toDateString();
         }

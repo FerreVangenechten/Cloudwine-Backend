@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\WeatherStation;
 use App\Models\WeatherStationUser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WeatherStationController extends Controller
 {
@@ -46,15 +47,58 @@ class WeatherStationController extends Controller
 
     public function store(Request $request)
     {
-        $weatherStation = WeatherStation::create($request->all());
+        $validator = Validator::make($request->all(), [
+            'name' => 'string',
+            'organisation_id' => 'integer',
+            'relais_name' => 'string',
+            'is_active' => 'boolean',
+            'is_public' => 'boolean',
+            'is_manual_relais' => 'boolean',
+            'switch_state' => 'boolean',
+            'longitude' => 'string',
+            'latitude' => 'string',
+            'is_location_alarm' => 'boolean',
+            'is_no_data_alarm' => 'boolean',
+            'gsm' => 'string|required|unique:users,gsm|regex:/(04)[0-9]{8}/'
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
+
+        if($validator->validated()){
+            $weatherStation = WeatherStation::create($request->all());
+        }
+
         return response()->json($weatherStation, 201); //201 --> Object created. Usefull for the store actions
     }
 
     public function update(Request $request,$weatherStation)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'string',
+            'organisation_id' => 'integer',
+            'relais_name' => 'string',
+            'is_active' => 'boolean',
+            'is_public' => 'boolean',
+            'is_manual_relais' => 'boolean',
+            'switch_state' => 'boolean',
+            'longitude' => 'string',
+            'latitude' => 'string',
+            'is_location_alarm' => 'boolean',
+            'is_no_data_alarm' => 'boolean',
+            'gsm' => 'string|required|unique:users,gsm|regex:/(04)[0-9]{8}/' . $weatherStation
+        ]);
+
+        if($validator->fails()){
+            return response()->json($validator->errors()->toJson(), 400);
+        }
         $station =  WeatherStation::find($weatherStation);
 
-        $station->update($request->all());
+        if($validator->validated()){
+            $station->update($request->all());
+        }
+
         return response()->json($station,200); //200 --> OK, The standard success code and default option
     }
 
