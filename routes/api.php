@@ -25,7 +25,7 @@ Route::group(['namespace' => 'App\Http\Controllers\Station'], function() {
 Route::group(['namespace' => 'App\Http\Controllers'], function() {
     Route::get('weatherstations', 'WeatherStationController@public');
     Route::get('weatherstations/{weatherStation}', 'WeatherStationController@publicid');
-    Route::get('values/{weatherStation}', 'Controllers\ValueController@index');
+    Route::get('values/{weatherStation}', 'ValueController@index');
     Route::get('values/relais/{weatherStation}', 'ValueController@relais');
     Route::get('values/battery/{weatherStation}', 'ValueController@battery');
     Route::get('values/location/{weatherStation}', 'ValueController@location');
